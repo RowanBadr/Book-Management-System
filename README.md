@@ -16,7 +16,7 @@ This project was developed as part of an academic course to demonstrate concepts
 - **Django REST Framework**
 - **SQLite**
 - REST APIs
-- 
+  
 ## 📌 Notes
 This project focuses on backend functionality.
 No frontend UI is included.
