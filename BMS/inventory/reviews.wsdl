@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://example.com/reviews.wsdl"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://example.com/reviews.wsdl">
+
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://example.com/reviews.wsdl">
+      <!-- Define elements for each operation -->
+      <xsd:element name="ReviewInfo">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="book_id" type="xsd:int"/>
+            <xsd:element name="user_id" type="xsd:int"/>
+            <xsd:element name="rating" type="xsd:int"/>
+            <xsd:element name="comment" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ReviewId">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="MessageResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+
+  <!-- Messages for each operation -->
+  <wsdl:message name="CreateReviewRequest">
+    <wsdl:part name="parameters" element="tns:ReviewInfo"/>
+  </wsdl:message>
+  <wsdl:message name="CreateReviewResponse">
+    <wsdl:part name="parameters" element="tns:MessageResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="UpdateReviewRequest">
+    <wsdl:part name="parameters" element="tns:ReviewInfo"/>
+    <wsdl:part name="id" element="tns:ReviewId"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateReviewResponse">
+    <wsdl:part name="parameters" element="tns:MessageResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="DeleteReviewRequest">
+    <wsdl:part name="parameters" element="tns:ReviewId"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteReviewResponse">
+    <wsdl:part name="parameters" element="tns:MessageResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="ListReviewsResponse">
+    <wsdl:part name="parameters" element="tns:ReviewInfo"/>
+  </wsdl:message>
+
+  <!-- PortType -->
+  <wsdl:portType name="ReviewPortType">
+    <wsdl:operation name="CreateReview">
+      <wsdl:input message="tns:CreateReviewRequest"/>
+      <wsdl:output message="tns:CreateReviewResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateReview">
+      <wsdl:input message="tns:UpdateReviewRequest"/>
+      <wsdl:output message="tns:UpdateReviewResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteReview">
+      <wsdl:input message="tns:DeleteReviewRequest"/>
+      <wsdl:output message="tns:DeleteReviewResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="ListReviews">
+      <wsdl:output message="tns:ListReviewsResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <!-- Binding -->
+  <wsdl:binding name="ReviewBinding" type="tns:ReviewPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <!-- Operations -->
+    <wsdl:operation name="CreateReview">
+      <soap:operation soapAction="http://example.com/CreateReview"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateReview">
+      <soap:operation soapAction="http://example.com/UpdateReview"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteReview">
+      <soap:operation soapAction="http://example.com/DeleteReview"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListReviews">
+      <soap:operation soapAction="http://example.com/ListReviews"/>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <!-- Service -->
+  <wsdl:service name="ReviewService">
+    <wsdl:port name="ReviewPort" binding="tns:ReviewBinding">
+      <soap:address location="http://example.com/reviews"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

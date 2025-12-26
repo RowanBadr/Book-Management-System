@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://example.com/books.wsdl"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://example.com/books.wsdl">
+
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://example.com/books.wsdl">
+      <!-- Define elements for each operation -->
+      <xsd:element name="BookInfo">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="author" type="xsd:string"/>
+            <xsd:element name="publish_date" type="xsd:string"/>
+            <xsd:element name="ISBN" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="BookId">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="MessageResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+
+  <!-- Messages for each operation -->
+  <wsdl:message name="CreateBookRequest">
+    <wsdl:part name="parameters" element="tns:BookInfo"/>
+  </wsdl:message>
+  <wsdl:message name="CreateBookResponse">
+    <wsdl:part name="parameters" element="tns:MessageResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="UpdateBookRequest">
+    <wsdl:part name="parameters" element="tns:BookInfo"/>
+    <wsdl:part name="id" element="tns:BookId"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateBookResponse">
+    <wsdl:part name="parameters" element="tns:MessageResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="DeleteBookRequest">
+    <wsdl:part name="parameters" element="tns:BookId"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteBookResponse">
+    <wsdl:part name="parameters" element="tns:MessageResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="ListBooksResponse">
+    <wsdl:part name="parameters" element="tns:BookInfo"/>
+  </wsdl:message>
+
+  <!-- PortType -->
+  <wsdl:portType name="BookPortType">
+    <wsdl:operation name="CreateBook">
+      <wsdl:input message="tns:CreateBookRequest"/>
+      <wsdl:output message="tns:CreateBookResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBook">
+      <wsdl:input message="tns:UpdateBookRequest"/>
+      <wsdl:output message="tns:UpdateBookResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBook">
+      <wsdl:input message="tns:DeleteBookRequest"/>
+      <wsdl:output message="tns:DeleteBookResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="ListBooks">
+      <wsdl:output message="tns:ListBooksResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <!-- Binding -->
+  <wsdl:binding name="BookBinding" type="tns:BookPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <!-- Operations -->
+    <wsdl:operation name="CreateBook">
+      <soap:operation soapAction="http://example.com/CreateBook"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBook">
+      <soap:operation soapAction="http://example.com/UpdateBook"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBook">
+      <soap:operation soapAction="http://example.com/DeleteBook"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListBooks">
+      <soap:operation soapAction="http://example.com/ListBooks"/>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <!-- Service -->
+  <wsdl:service name="BookService">
+    <wsdl:port name="BookPort" binding="tns:BookBinding">
+      <soap:address location="http://example.com/books"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

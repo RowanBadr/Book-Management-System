@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://example.com/users.wsdl"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  targetNamespace="http://example.com/users.wsdl">
+
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://example.com/users.wsdl">
+      <!-- Define elements for each operation -->
+      <xsd:element name="UserInfo">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="username" type="xsd:string"/>
+            <xsd:element name="email" type="xsd:string"/>
+            <xsd:element name="password" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="UserId">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="MessageResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+
+  <!-- Messages for each operation -->
+  <wsdl:message name="CreateUserRequest">
+    <wsdl:part name="parameters" element="tns:UserInfo"/>
+  </wsdl:message>
+  <wsdl:message name="CreateUserResponse">
+    <wsdl:part name="parameters" element="tns:MessageResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="UpdateUserRequest">
+    <wsdl:part name="parameters" element="tns:UserInfo"/>
+    <wsdl:part name="id" element="tns:UserId"/>
+  </wsdl:message>
+  <wsdl:message name="UpdateUserResponse">
+    <wsdl:part name="parameters" element="tns:MessageResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="DeleteUserRequest">
+    <wsdl:part name="parameters" element="tns:UserId"/>
+  </wsdl:message>
+  <wsdl:message name="DeleteUserResponse">
+    <wsdl:part name="parameters" element="tns:MessageResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="ListUsersResponse">
+    <wsdl:part name="parameters" element="tns:UserInfo"/>
+  </wsdl:message>
+
+  <!-- PortType -->
+  <wsdl:portType name="UserPortType">
+    <wsdl:operation name="CreateUser">
+      <wsdl:input message="tns:CreateUserRequest"/>
+      <wsdl:output message="tns:CreateUserResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <wsdl:input message="tns:UpdateUserRequest"/>
+      <wsdl:output message="tns:UpdateUserResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <wsdl:input message="tns:DeleteUserRequest"/>
+      <wsdl:output message="tns:DeleteUserResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="ListUsers">
+      <wsdl:output message="tns:ListUsersResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <!-- Binding -->
+  <wsdl:binding name="UserBinding" type="tns:UserPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <!-- Operations -->
+    <wsdl:operation name="CreateUser">
+      <soap:operation soapAction="http://example.com/CreateUser"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <soap:operation soapAction="http://example.com/UpdateUser"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <soap:operation soapAction="http://example.com/DeleteUser"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListUsers">
+      <soap:operation soapAction="http://example.com/ListUsers"/>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <!-- Service -->
+  <wsdl:service name="UserService">
+    <wsdl:port name="UserPort" binding="tns:UserBinding">
+      <soap:address location="http://example.com/users"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
